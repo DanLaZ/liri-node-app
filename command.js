@@ -90,13 +90,6 @@ var Command = function() {
   }
 };
 
-// var Spotify = require('node-spotify-api');
- 
-// var spotify = new Spotify({
-//   id: "de189e77423b4163ace6f66602d6cb61",
-//   secret: "b3f253788e8e43d9bbe6a1898acdaacf"
-// });
-
 // fs.appendFile("log.txt", concertData + divider, function() {
 //     console.log(concertData);
 //   });

@@ -1,52 +1,53 @@
 const axios = require("axios");
 const moment = require('moment');
 const fs = require("fs");
+require("dotenv").config();
+const keys = require("./keys.js");
+const Spotify = require('node-spotify-api');
+const spotify = new Spotify(keys.spotify);
+
 
 var Command = function() {
 
-    var divider = "\n------------------------------------------------------------\n\n";
+  var divider = "\n------------------------------------------------------------\n\n";
+  this.findConcert = function(artist) {
 
-    this.findConcert = function(artist) {
+    const url = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
 
-        const url = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
+    axios.get(url).then(function (response) {
+       
+      var concertInfo = response.data[0];
+      var venueInfo = concertInfo.venue;
+  
+      var venueCity = venueInfo.city;
+      var venueCountry = venueInfo.country;
+      var eventDate = concertInfo.datetime;
 
-        axios.get(url).then(function (response) {
-            // handle success
-            var concertInfo = response.data[0];
-            var venueInfo = concertInfo.venue;
-        
-            var venueCity = venueInfo.city;
-            var venueCountry = venueInfo.country;
-            var eventDate = concertInfo.datetime;
+      var concertData = [
+        "Concert Name: " + concertInfo.venue.name,
+        "Location: " + venueCity + ", " + venueCountry,
+        "Date: " + moment(eventDate).format("MM/DD/YYYY")
+      ].join("\n");
 
-            var concertData = [
-              "Concert Name: " + concertInfo.venue.name,
-              "Location: " + venueCity + ", " + venueCountry,
-              "Date: " + moment(eventDate).format("MM/DD/YYYY")
-            ].join("\n");
+      console.log(concertData);
+    })
+    .catch(function (error) {
+        // handle error
+        console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+  }
+  this.findMovie = function(movie) {
 
-            console.log(concertData);
-        })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
-        })
-        .finally(function () {
-          // always executed
-        });
-     
-      
-        
-    }
-};
+    const URL = "http://www.omdbapi.com/?apikey=trilogy&t=" + movie;
 
-const URL = "http://www.omdbapi.com/?apikey=trilogy&t=" + "Blade";
+    axios.get(URL).then(function (response) {
 
-axios.get(URL).then(function (response) {
-    
-    var omdbInfo = response.data;
+      var omdbInfo = response.data;
 
-    var omdbData = [
+      var omdbData = [
         "Title: " + omdbInfo.Title,
         "Year Released: " + omdbInfo.Year,
         "IMDB Rating: " + omdbInfo.Ratings[0].Value,
@@ -54,23 +55,48 @@ axios.get(URL).then(function (response) {
         "Country Movie was Produced in: " + omdbInfo.Country,
         "Language: " + omdbInfo.Language,
         "Actors: " + omdbInfo.Actors 
-    ].join("\n");
+      ].join("\n");
 
-    console.log(omdbData);
-})
-.catch(function (error) {
-  // handle error
-  console.log(error);
-})
-.finally(function () {
-  // always executed
+      console.log(omdbData);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .finally(function () {
+      // always executed
+    });
+  }
+};
+
+// var Spotify = require('node-spotify-api');
+ 
+// var spotify = new Spotify({
+//   id: "de189e77423b4163ace6f66602d6cb61",
+//   secret: "b3f253788e8e43d9bbe6a1898acdaacf"
+// });
+
+spotify.search({ type: 'track', query: 'Award'}, function(err, data) {
+  if (err) {
+    return console.log('Error occurred: ' + err);
+  }
+
+  var songInfo = data.tracks.items[0];
+
+
+  
+  
+
+  var songData = [
+    "Artist: " + songInfo.artists[0].name,
+    "Song: " + songInfo.name,
+    "Album: " + songInfo.album.name,
+    "Preview Link: " + songInfo.preview_url     
+  ].join("\n");
+  
+  console.log(songInfo); 
+  console.log(songData);
 });
-
-
-
-
-
-
 
 // fs.appendFile("log.txt", concertData + divider, function() {
 //     console.log(concertData);

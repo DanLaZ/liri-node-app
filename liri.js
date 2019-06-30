@@ -1,4 +1,4 @@
-require("dotenv").config();
+// require("dotenv").config();
 // var keys = require("./keys.js");
 // var spotify = new Spotify(keys.spotify);
 var Command = require("./command.js");
@@ -15,7 +15,7 @@ else if (search === "song") {
     console.log("Searching for song info...");
     command.findSong(term);
 }
-else {
+else if (search === "movie") {
     console.log("Searching for movie info...");
     command.findMovie(term);
 }

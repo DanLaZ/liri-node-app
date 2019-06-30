@@ -8,6 +8,9 @@ exports.spotify = {
 const url = "https://rest.bandsintown.com/artists/" + "Cardi B" + "/events?app_id=codingbootcamp";
 
 const axios = require("axios");
+var moment = require('moment');
+
+
 axios.get(url)
   .then(function (response) {
     // handle success
@@ -20,8 +23,8 @@ axios.get(url)
 
     var concertData = [
       "Concert Name: " + concertInfo.venue.name,
-      "Location: " + venueCity + "," + venueCountry,
-      "Date: " + eventDate,
+      "Location: " + venueCity + ", " + venueCountry,
+      "Date: " + moment(eventDate).format("MM/DD/YYYY")
     ].join("\n");
 
     console.log(concertData);

@@ -1,10 +1,11 @@
-const axios = require("axios");
-const moment = require('moment');
-const fs = require("fs");
+var axios = require("axios");
+var moment = require('moment');
+
 require("dotenv").config();
-const keys = require("./keys.js");
-const Spotify = require('node-spotify-api');
-const spotify = new Spotify(keys.spotify);
+var keys = require("./keys.js");
+var Spotify = require('node-spotify-api');
+var spotify = new Spotify(keys.spotify);
+var fs = require("fs");
 
 
 var Command = function() {
@@ -13,7 +14,7 @@ var Command = function() {
 
   this.findConcert = function(artist) {
 
-    const url = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
+    var url = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
 
     axios.get(url).then(function (response) {
        
@@ -31,6 +32,10 @@ var Command = function() {
       ].join("\n");
 
       console.log(divider + concertData + divider);
+
+      fs.appendFile("log.txt", concertData + "\n", function() {
+        console.log("Info was logged");
+      });
     })
     .catch(function (error) {
         // handle error
@@ -42,6 +47,7 @@ var Command = function() {
   }
 
   this.findSong = function(track) {
+
     spotify.search({ type: 'track', query: track}, function(err, data) {
       if (err) {
         return console.log('Error occurred: ' + err);
@@ -62,7 +68,7 @@ var Command = function() {
 
   this.findMovie = function(movie) {
 
-    const URL = "http://www.omdbapi.com/?apikey=trilogy&t=" + movie;
+    var URL = "http://www.omdbapi.com/?apikey=trilogy&t=" + movie;
 
     axios.get(URL).then(function (response) {
 
@@ -90,8 +96,6 @@ var Command = function() {
   }
 };
 
-// fs.appendFile("log.txt", concertData + divider, function() {
-//     console.log(concertData);
-//   });
+
 
 module.exports = Command;

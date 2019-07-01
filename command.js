@@ -33,8 +33,8 @@ var Command = function() {
 
       console.log(divider + concertData + divider);
 
-      fs.appendFile("log.txt", concertData + "\n", function() {
-        console.log("Info was logged");
+      fs.appendFile("log.txt", concertData + "\n\n", function() {
+        
       });
     })
     .catch(function (error) {
@@ -63,6 +63,10 @@ var Command = function() {
       ].join("\n");
   
       console.log(divider + songData + divider);
+
+      fs.appendFile("log.txt", songData + "\n\n", function() {
+        
+      });
     });
   }
 
@@ -85,6 +89,10 @@ var Command = function() {
       ].join("\n");
 
       console.log(divider + omdbData + divider);
+
+      fs.appendFile("log.txt", omdbData + "\n\n", function() {
+        
+      });
     })
     .catch(function (error) {
       // handle error

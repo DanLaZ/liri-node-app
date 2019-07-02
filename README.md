@@ -28,6 +28,7 @@ IMDB Rating <br>
 Rotten Tomatoes Rating <br>
 Production Location <br>
 Languages <br>
+Plot <br>
 Actors 
 
 ## NPMs Used

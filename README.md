@@ -2,6 +2,11 @@
 
 ## Overview
 This LIRI bot will search Bands in Town for concerts, Spotify for songs, and OMDB for movies.
+<br>
+<br>
+![](lirigif.gif)
+<br>
+<br>
 
 
 ## How to Use

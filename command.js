@@ -1,9 +1,9 @@
 var axios = require("axios");
-var moment = require('moment');
+var moment = require("moment");
 
 require("dotenv").config();
 var keys = require("./keys.js");
-var Spotify = require('node-spotify-api');
+var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
 var fs = require("fs");
 
@@ -26,7 +26,7 @@ var Command = function() {
       var eventDate = concertInfo.datetime;
 
       var concertData = [
-        "Concert Name: " + concertInfo.venue.name,
+        "Name of Concert: " + concertInfo.venue.name,
         "Location: " + venueCity + ", " + venueCountry,
         "Date: " + moment(eventDate).format("MM/DD/YYYY")
       ].join("\n");
@@ -54,7 +54,7 @@ var Command = function() {
       }
     
       var songInfo = data.tracks.items[0];
-  
+    
       var songData = [
         "Artist: " + songInfo.artists[0].name,
         "Song: " + songInfo.name,
@@ -85,9 +85,10 @@ var Command = function() {
         "Rotten Tomatoes Rating: " + omdbInfo.Ratings[1].Value,
         "Production Location: " + omdbInfo.Country,
         "Languages: " + omdbInfo.Language,
+        "Plot: " + omdbInfo.Plot,
         "Actors: " + omdbInfo.Actors 
       ].join("\n");
-
+    
       console.log(divider + omdbData + divider);
 
       fs.appendFile("log.txt", omdbData + "\n\n", function() {
